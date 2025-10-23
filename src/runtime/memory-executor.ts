@@ -1,7 +1,7 @@
 import type { MemoryCommand } from "../types/commands.js";
 import type { Storage } from "./storage.js";
 
-const MEMORY_ROOT = "/memories";
+export const MEMORY_ROOT = "/memories";
 
 const stripTrailingSlash = (path: string): string => {
   if (path === MEMORY_ROOT) {

@@ -8,12 +8,15 @@
     "build": "tsc -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
     "lint": "biome lint .",
-    "format": "biome format --write ."
+    "format": "biome format --write .",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "author": "Yanzhen Yu <yanzhen@arcfra.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.1"
   }
 }
