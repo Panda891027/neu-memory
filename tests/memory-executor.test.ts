@@ -37,7 +37,10 @@ describe("memory executor - view", () => {
 
   it("renders file content with line numbers and range", async () => {
     const { executor, storage } = createExecutor();
-    await storage.write("/memories/log.txt", ["alpha", "beta", "gamma", "delta"].join("\n"));
+    await storage.write(
+      "/memories/log.txt",
+      ["alpha", "beta", "gamma", "delta"].join("\n"),
+    );
 
     const command: ViewCommand = {
       command: "view",
@@ -83,8 +86,12 @@ describe("memory executor - create", () => {
       path: "/memories/team/status.txt",
       file_text: "draft",
     };
-    await expect(executor(command)).rejects.toThrow("Path not found: /memories/team/status.txt");
-    await expect(storage.stat("/memories/team")).resolves.toEqual({ kind: "directory" });
+    await expect(executor(command)).rejects.toThrow(
+      "Path not found: /memories/team/status.txt",
+    );
+    await expect(storage.stat("/memories/team")).resolves.toEqual({
+      kind: "directory",
+    });
   });
 });
 
@@ -102,7 +109,9 @@ describe("memory executor - str_replace", () => {
 
     const result = await executor(command);
     expect(result).toBe("File /memories/profile.txt has been edited");
-    await expect(storage.read("/memories/profile.txt")).resolves.toBe("I like coffee");
+    await expect(storage.read("/memories/profile.txt")).resolves.toBe(
+      "I like coffee",
+    );
   });
 
   it("rejects when substring is missing", async () => {
@@ -116,7 +125,9 @@ describe("memory executor - str_replace", () => {
       new_str: "coffee",
     };
 
-    await expect(executor(command)).rejects.toThrow("Text not found in /memories/profile.txt");
+    await expect(executor(command)).rejects.toThrow(
+      "Text not found in /memories/profile.txt",
+    );
   });
 
   it("rejects when substring appears multiple times", async () => {
@@ -150,7 +161,9 @@ describe("memory executor - insert", () => {
 
     const result = await executor(command);
     expect(result).toBe("Text inserted at line 1 in /memories/diary.txt");
-    await expect(storage.read("/memories/diary.txt")).resolves.toBe(["one", "two", "three"].join("\n"));
+    await expect(storage.read("/memories/diary.txt")).resolves.toBe(
+      ["one", "two", "three"].join("\n"),
+    );
   });
 
   it("rejects when line is out of range", async () => {
@@ -164,7 +177,9 @@ describe("memory executor - insert", () => {
       insert_text: "two",
     };
 
-    await expect(executor(command)).rejects.toThrow("Invalid insert_line 5. Must be 0-1");
+    await expect(executor(command)).rejects.toThrow(
+      "Invalid insert_line 5. Must be 0-1",
+    );
   });
 });
 
@@ -205,7 +220,9 @@ describe("memory executor - delete", () => {
       path: "/memories",
     };
 
-    await expect(executor(command)).rejects.toThrow("Cannot delete the /memories directory itself");
+    await expect(executor(command)).rejects.toThrow(
+      "Cannot delete the /memories directory itself",
+    );
   });
 });
 
@@ -221,10 +238,16 @@ describe("memory executor - rename", () => {
     };
 
     const result = await executor(command);
-    expect(result).toBe("Renamed /memories/old.txt to /memories/archive/new.txt");
+    expect(result).toBe(
+      "Renamed /memories/old.txt to /memories/archive/new.txt",
+    );
     await expect(storage.stat("/memories/old.txt")).resolves.toBeNull();
-    await expect(storage.stat("/memories/archive/new.txt")).resolves.toEqual({ kind: "file" });
-    await expect(storage.read("/memories/archive/new.txt")).resolves.toBe("legacy");
+    await expect(storage.stat("/memories/archive/new.txt")).resolves.toEqual({
+      kind: "file",
+    });
+    await expect(storage.read("/memories/archive/new.txt")).resolves.toBe(
+      "legacy",
+    );
   });
 
   it("rejects when destination already exists", async () => {
@@ -238,6 +261,8 @@ describe("memory executor - rename", () => {
       new_path: "/memories/two.txt",
     };
 
-    await expect(executor(command)).rejects.toThrow("Destination already exists: /memories/two.txt");
+    await expect(executor(command)).rejects.toThrow(
+      "Destination already exists: /memories/two.txt",
+    );
   });
 });
