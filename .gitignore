@@ -4,3 +4,5 @@ optimization/
 *.log
 
 .env
+examples/.env
+examples/memory/

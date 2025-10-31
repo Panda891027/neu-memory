@@ -1,56 +1,103 @@
-# Open Memory Tool
+# neu-memory
 
-TypeScript implementation scaffolding for a Claude-compatible memory tool. The project mirrors Anthropic's documented contract so that an agent can persist knowledge under a `/memories` directory without shipping runtime dependencies.
+Lightweight, model-agnostic memory toolkit inspired by Claude's built-in memory tool. Bring long-term memory to any LLM agent with a tiny TypeScript package.
 
-## Layout
+## Why neu-memory?
 
-- `src/types/commands.ts`: strongly-typed command schema (`view`, `create`, `str_replace`, `insert`, `delete`, `rename`).
-- `src/prompts/system-prompt.ts`: factory for the memory protocol system prompt (tool name placeholder included).
-- `src/prompts/tool-description.ts`: factory for Markdown command documentation.
-- `src/runtime/memory-executor.ts`: command dispatcher that delegates to a storage backend.
-- `src/runtime/storage.ts`: abstract storage contract (works with memory, filesystem, DB, or object-store backends).
-- `src/storage/in-memory.ts`: lightweight in-memory `Storage` implementation for testing.
-- `src/index.ts`: factory (`createMemoryTool`) that wires prompts, schema, and executor.
-- `src/schema/tool-json-schema.ts`: factory for the tool JSON schema definition.
+- Works with any runtime: drop into OpenAI SDK, Vercel AI SDK, LangChain, or your own agent loop.
+- Fast integration: give agents long-term recall in minutes, with zero runtime dependencies.
+- Storage agnostic: use the same interface across local filesystems, database, or cloud object stores.
+- 100% open source.
 
-## Factory usage
+## Quickstart
+
+Install:
+
+```bash
+npm install @neutree-ai/memory
+# or: yarn add @neutree-ai/memory
+```
+
+Create a tool with the bundled in-memory backend:
 
 ```ts
-import { createMemoryTool } from "open-memory-tool";
-import { InMemoryStorage } from "open-memory-tool/storage/in-memory";
+import { createMemoryTool } from "@neutree-ai/memory";
+import { InMemoryStorage } from "@neutree-ai/memory/storage/in-memory";
 
 const storage = new InMemoryStorage();
-
-const memoryTool = createMemoryTool({
-  toolName: "custom-memory",
+const memoryKit = createMemoryTool({
+  toolName: "workspace-memory",
   storage,
 });
 
-memoryTool.name; // "custom-memory"
-memoryTool.systemPrompt; // system prompt string
-memoryTool.toolDescription; // Markdown tool description
-memoryTool.toolJsonSchema; // JSON schema for tool input (use in tool declaration)
-const toolResult = await memoryTool.execute({ command: "view", path: "/memories" });
+const result = await memoryKit.execute({
+  command: "create",
+  path: "/memories/log.txt",
+  file_text: "First note!",
+});
 
-// Node.js filesystem example:
-// import { NodeFileSystemStorage } from "open-memory-tool/storage/node-fs";
-// const storage = await NodeFileSystemStorage.init("./memory");
+console.log(result);
+// => "File created successfully at /memories/log.txt"
 ```
 
-Future work can layer on JSON parsing, default storage implementations, and evaluation harnesses; the executor already dispatches to the injected storage implementation.
-The `Storage` interface must implement the seven methods `stat/read/write/delete/move/ensureDirectory/list`, enabling the executor to compose directory listings and file operations across different backends.
+Drop the kit into Vercel AI SDK:
 
-## Scripts
+```ts
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
+import { createMemoryTool } from "@neutree-ai/memory";
+import { InMemoryStorage } from "@neutree-ai/memory/storage/in-memory";
 
-- `yarn build`: compile TypeScript to `dist/`.
-- `yarn run check`: strict type-check without emitting output.
-- `yarn lint`: run Biome lint checks.
-- `yarn format`: apply Biome formatting fixes in-place.
-- `yarn test`: execute Vitest in single-run mode.
-- `yarn test:watch`: start Vitest in watch mode for local development.
+const memoryKit = createMemoryTool({
+  storage: new InMemoryStorage(),
+});
 
-## Next steps
+const result = await streamText({
+  model: openai("gpt-4o-mini"),
+  // Coach the model to use memoryKit before it starts working.
+  system: memoryKit.systemPrompt,
+  prompt: "Draft a project update based on the latest repository activity.",
+  tools: {
+    [memoryKit.name]: {
+      // Expose the generated spec so the SDK can validate tool calls.
+      description: memoryKit.toolDescription,
+      parameters: memoryKit.toolJsonSchema,
+      // Delegate execution to memoryKit.
+      execute: memoryKit.execute,
+    },
+  },
+});
+```
 
-1. Implement a higher-level mediator that binds parsed commands and executor results to your agent runtime (tool call in, tool result out).
-2. Extend the storage layer with security policies (size limits, sensitive content filters, path normalization tests).
-3. Design evaluation harnesses (DSPy/GEPA-inspired) to iterate on prompt quality and command usage heuristics.
+## Examples
+
+The [examples](examples/) directory contains runnable examples with different AI SDKs:
+
+- [Vercel AI SDK + InMemoryStorage](examples/vercel-ai-sdk-in-memory.ts)
+- [OpenAI SDK + NodeFileSystemStorage](examples/openai-sdk-node-fs.ts)
+
+To run:
+
+```bash
+cd examples && yarn install
+cp .env.example .env  # Add your API key and optionally set OPENAI_BASE_URL
+npx tsx <example-file>.ts
+```
+
+All examples use `dotenv` to load environment variables from `.env`.
+
+## How it works
+
+neu-memory keeps the memory contract small and explicit:
+
+1. **Command schema** — strongly typed definitions for `view`, `create`, `str_replace`, `insert`, `delete`, `rename` requests.
+2. **Executor** — validates `/memories` paths, routes commands, and formats responses for agents.
+3. **Storage interface** — plug in any storage backend by implementing seven familiar filesystem-like methods. See [`src/runtime/storage.ts`](src/runtime/storage.ts) for the full contract.
+
+## Contributing
+
+Please read the [contribution guide](CONTRIBUTING.md) before opening an issue or pull request.
+
+## License
+
+Apache-2.0. See [LICENSE](LICENSE) for details.

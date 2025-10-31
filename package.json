@@ -1,5 +1,5 @@
 {
-  "name": "open-memory-tool",
+  "name": "@neutree-ai/memory",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.js",
@@ -29,18 +29,10 @@
   "author": "Yanzhen Yu <yanzhen@arcfra.com>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@ax-llm/ax": "^14.0.37",
     "@biomejs/biome": "1.9.4",
     "@types/node": "^24.9.1",
     "typescript": "^5.9.3",
-    "undici": "^7.16.0",
     "vitest": "^4.0.1"
   },
-  "dependencies": {
-    "@ai-sdk/anthropic": "^2.0.39",
-    "@ai-sdk/openai-compatible": "^1.0.24",
-    "@openrouter/ai-sdk-provider": "^1.2.0",
-    "ai": "^5.0.82",
-    "zod": "^4.1.12"
-  }
+  "dependencies": {}
 }

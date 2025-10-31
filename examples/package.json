@@ -1,0 +1,17 @@
+{
+  "name": "@neutree-ai/memory-examples",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@ai-sdk/openai-compatible": "^1.0.25",
+    "@neutree-ai/memory": "file:.."
+  },
+  "devDependencies": {
+    "ai": "^5",
+    "dotenv": "^17.2.3",
+    "openai": "^6.7.0",
+    "tsx": "^4.20.6",
+    "zod": "^4.1.12"
+  }
+}
