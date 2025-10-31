@@ -1,7 +1,7 @@
 import "dotenv/config";
 import OpenAI from "openai";
 import { createMemoryTool } from "@neutree-ai/memory";
-import { NodeFileSystemStorage } from "@neutree-ai/memory/storage/node-fs";
+import { NodeFileSystemStorage } from "@neutree-ai/memory-storage-node-fs";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

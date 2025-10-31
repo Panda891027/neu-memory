@@ -6,3 +6,5 @@ optimization/
 .env
 examples/.env
 examples/memory/
+
+.turbo

@@ -6,10 +6,29 @@ import {
 import { createSystemPrompt } from "./prompts/system-prompt.js";
 import { createToolDescription } from "./prompts/tool-description.js";
 import { createToolJsonSchema } from "./schema/tool-json-schema.js";
-import { createMemoryExecutor } from "./runtime/memory-executor.js";
-import type { Storage } from "./runtime/storage.js";
+import {
+  createMemoryExecutor,
+  MEMORY_ROOT,
+} from "./runtime/memory-executor.js";
+import type {
+  Storage,
+  StoragePathInfo,
+  StorageDirectoryEntry,
+} from "./runtime/storage.js";
 
 export { MEMORY_COMMANDS } from "./types/commands.js";
+export { MEMORY_ROOT };
+export { createMemoryExecutor } from "./runtime/memory-executor.js";
+export type { Storage, StoragePathInfo, StorageDirectoryEntry };
+export type {
+  MemoryCommand,
+  CreateCommand,
+  DeleteCommand,
+  InsertCommand,
+  RenameCommand,
+  StrReplaceCommand,
+  ViewCommand,
+} from "./types/commands.js";
 
 export interface CreateMemoryToolOptions {
   readonly toolName?: MemoryToolName;

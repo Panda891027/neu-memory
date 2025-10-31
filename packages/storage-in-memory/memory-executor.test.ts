@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { createMemoryExecutor } from "../src/runtime/memory-executor.js";
+import { createMemoryExecutor } from "@neutree-ai/memory";
 import type {
   CreateCommand,
   DeleteCommand,
@@ -8,8 +8,8 @@ import type {
   RenameCommand,
   StrReplaceCommand,
   ViewCommand,
-} from "../src/types/commands.js";
-import { InMemoryStorage } from "../src/storage/in-memory.js";
+} from "@neutree-ai/memory";
+import { InMemoryStorage } from "./index.js";
 
 const createExecutor = () => {
   const storage = new InMemoryStorage();

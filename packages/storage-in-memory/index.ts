@@ -1,9 +1,9 @@
-import { MEMORY_ROOT } from "../runtime/memory-executor.js";
-import type {
-  Storage,
-  StorageDirectoryEntry,
-  StoragePathInfo,
-} from "../runtime/storage.js";
+import {
+  MEMORY_ROOT,
+  type Storage,
+  type StorageDirectoryEntry,
+  type StoragePathInfo,
+} from "@neutree-ai/memory";
 
 type FileNode = {
   kind: "file";

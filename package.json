@@ -1,38 +1,23 @@
 {
-  "name": "@neutree-ai/memory",
+  "name": "@neutree-ai/memory-monorepo",
   "version": "0.1.0",
+  "private": true,
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./storage/in-memory": {
-      "types": "./dist/storage/in-memory.d.ts",
-      "import": "./dist/storage/in-memory.js"
-    },
-    "./storage/node-fs": {
-      "types": "./dist/storage/node-fs.d.ts",
-      "import": "./dist/storage/node-fs.js"
-    }
-  },
+  "packageManager": "yarn@1.22.22",
+  "workspaces": ["packages/*", "examples"],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "check": "tsc -p tsconfig.json --noEmit",
+    "build": "turbo run build",
+    "check": "turbo run check",
+    "test": "turbo run test",
     "lint": "biome lint .",
-    "format": "biome format --write .",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "format": "biome format --write ."
   },
   "author": "Yanzhen Yu <yanzhen@arcfra.com>",
   "license": "Apache-2.0",
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/node": "^24.9.1",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.1"
-  },
-  "dependencies": {}
+    "turbo": "^2.6.0",
+    "typescript": "^5.9.3"
+  }
 }

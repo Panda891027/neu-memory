@@ -11,18 +11,18 @@ Lightweight, model-agnostic memory toolkit inspired by Claude's built-in memory 
 
 ## Quickstart
 
-Install:
+Install the core package and a storage backend:
 
 ```bash
-npm install @neutree-ai/memory
-# or: yarn add @neutree-ai/memory
+npm install @neutree-ai/memory @neutree-ai/memory-storage-in-memory
+# or: yarn add @neutree-ai/memory @neutree-ai/memory-storage-in-memory
 ```
 
-Create a tool with the bundled in-memory backend:
+Create a tool with the in-memory backend:
 
 ```ts
 import { createMemoryTool } from "@neutree-ai/memory";
-import { InMemoryStorage } from "@neutree-ai/memory/storage/in-memory";
+import { InMemoryStorage } from "@neutree-ai/memory-storage-in-memory";
 
 const storage = new InMemoryStorage();
 const memoryKit = createMemoryTool({
@@ -46,7 +46,7 @@ Drop the kit into Vercel AI SDK:
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { createMemoryTool } from "@neutree-ai/memory";
-import { InMemoryStorage } from "@neutree-ai/memory/storage/in-memory";
+import { InMemoryStorage } from "@neutree-ai/memory-storage-in-memory";
 
 const memoryKit = createMemoryTool({
   storage: new InMemoryStorage(),
@@ -69,12 +69,19 @@ const result = await streamText({
 });
 ```
 
+## Available Storage Backends
+
+- **`@neutree-ai/memory-storage-in-memory`** - Ephemeral in-memory storage (0 dependencies, great for testing)
+- **`@neutree-ai/memory-storage-node-fs`** - Node.js filesystem storage (0 dependencies, persistent local storage)
+
+Additional storage backends can be implemented by following the `Storage` interface in `@neutree-ai/memory`.
+
 ## Examples
 
 The [examples](examples/) directory contains runnable examples with different AI SDKs:
 
-- [Vercel AI SDK + InMemoryStorage](examples/vercel-ai-sdk-in-memory.ts)
-- [OpenAI SDK + NodeFileSystemStorage](examples/openai-sdk-node-fs.ts)
+- [Vercel AI SDK + `@neutree-ai/memory-storage-in-memory`](examples/vercel-ai-sdk-in-memory.ts)
+- [OpenAI SDK + `@neutree-ai/memory-storage-node-fs`](examples/openai-sdk-node-fs.ts)
 
 To run:
 

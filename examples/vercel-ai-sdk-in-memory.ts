@@ -2,7 +2,7 @@ import "dotenv/config";
 import { generateText, jsonSchema, stepCountIs } from "ai";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
 import { createMemoryTool } from "@neutree-ai/memory";
-import { InMemoryStorage } from "@neutree-ai/memory/storage/in-memory";
+import { InMemoryStorage } from "@neutree-ai/memory-storage-in-memory";
 
 const openai = createOpenAICompatible({
   name: "openai",

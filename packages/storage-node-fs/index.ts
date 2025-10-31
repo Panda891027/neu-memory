@@ -1,12 +1,12 @@
 import { promises as fs } from "node:fs";
 import { resolve } from "node:path";
 
-import { MEMORY_ROOT } from "../runtime/memory-executor.js";
-import type {
-  Storage,
-  StorageDirectoryEntry,
-  StoragePathInfo,
-} from "../runtime/storage.js";
+import {
+  MEMORY_ROOT,
+  type Storage,
+  type StorageDirectoryEntry,
+  type StoragePathInfo,
+} from "@neutree-ai/memory";
 
 const normalizeMemoryPath = (memoryPath: string): string => {
   if (memoryPath === MEMORY_ROOT) {

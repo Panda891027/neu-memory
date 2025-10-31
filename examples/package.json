@@ -5,7 +5,9 @@
   "type": "module",
   "dependencies": {
     "@ai-sdk/openai-compatible": "^1.0.25",
-    "@neutree-ai/memory": "file:.."
+    "@neutree-ai/memory": "*",
+    "@neutree-ai/memory-storage-in-memory": "*",
+    "@neutree-ai/memory-storage-node-fs": "*"
   },
   "devDependencies": {
     "ai": "^5",

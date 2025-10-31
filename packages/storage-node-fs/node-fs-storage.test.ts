@@ -12,8 +12,8 @@ import { promises as fs } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 
-import { NodeFileSystemStorage } from "../src/storage/node-fs.js";
-import { MEMORY_ROOT } from "../src/runtime/memory-executor.js";
+import { NodeFileSystemStorage } from "./index.js";
+import { MEMORY_ROOT } from "@neutree-ai/memory";
 
 let tempRoot: string;
 let storage: NodeFileSystemStorage;
