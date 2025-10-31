@@ -1,0 +1,290 @@
+{
+  "metadata": {
+    "name": "memory-tool-input-scenarios",
+    "created_at": "2025-10-31T00:00:00.000Z",
+    "total_items": 20,
+    "description": "Diverse scenarios for testing memory tool behavior"
+  },
+  "scenarios": [
+    {
+      "id": "save-code-explicit",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm working on a Python web scraper that keeps crashing with a timeout error. Here's the problematic function:\n\n```python\ndef fetch_page(url, retries=3):\n    for i in range(retries):\n        try:\n            response = requests.get(url, timeout=5)\n            return response.text\n        except requests.exceptions.Timeout:\n            if i == retries - 1:\n                raise\n            time.sleep(1)\n```\n\nPlease help me debug this and remember the solution for later."
+        }
+      ],
+      "metadata": {
+        "description": "User explicitly asks to remember debugging solution",
+        "category": "explicit-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "casual-debug",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Why is my Python script throwing a NameError? I have `print(x)` but x is not defined."
+        }
+      ],
+      "metadata": {
+        "description": "Simple one-off question, no persistence needed",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "continue-previous-work",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Can you help me continue working on the API integration project I was doing yesterday?"
+        }
+      ],
+      "metadata": {
+        "description": "User references previous work, should check memory first",
+        "category": "view-memory",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "general-knowledge",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What's the difference between async/await and promises in JavaScript?"
+        }
+      ],
+      "metadata": {
+        "description": "General knowledge question",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "save-config",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Save this database configuration for my project:\n\nHost: db.example.com\nPort: 5432\nDatabase: prod_db\nUser: admin"
+        }
+      ],
+      "metadata": {
+        "description": "Explicit save command",
+        "category": "explicit-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "update-config",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Update the database port in my saved config to 5433 instead of 5432"
+        }
+      ],
+      "metadata": {
+        "description": "Update existing saved information",
+        "category": "update-memory",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "greeting",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Hello! How are you doing today?"
+        }
+      ],
+      "metadata": {
+        "description": "Casual greeting",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "track-requirements",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I want to keep track of my project requirements:\n1. User authentication with JWT\n2. PostgreSQL database\n3. REST API with Express\n4. Docker deployment\n\nLet's start working on requirement #1."
+        }
+      ],
+      "metadata": {
+        "description": "Implicit save - user wants to track requirements",
+        "category": "implicit-save",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "explain-code",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Can you explain what this code does?\n\n```js\nconst result = arr.reduce((acc, val) => acc + val, 0);\n```"
+        }
+      ],
+      "metadata": {
+        "description": "Code explanation, no persistence needed",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "delete-memory",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Delete the old database config file, I don't need it anymore."
+        }
+      ],
+      "metadata": {
+        "description": "Delete saved memory",
+        "category": "delete-memory",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "check-progress",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What was I working on last time?"
+        }
+      ],
+      "metadata": {
+        "description": "Check previous work status",
+        "category": "view-memory",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "simple-task",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write a function to reverse a string in Python."
+        }
+      ],
+      "metadata": {
+        "description": "Simple current task, no history reference",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "track-bug",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I found a critical bug in the payment module. The total calculation is wrong when applying discounts. We need to track this."
+        }
+      ],
+      "metadata": {
+        "description": "Track important bug for later reference",
+        "category": "implicit-save",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "multi-session-project",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm starting a multi-day project to build a task management app. Store the project overview so we can continue tomorrow."
+        }
+      ],
+      "metadata": {
+        "description": "Explicit multi-session project",
+        "category": "explicit-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "hypothetical",
+      "messages": [
+        {
+          "role": "user",
+          "content": "If I wanted to build a REST API, what technologies would you recommend?"
+        }
+      ],
+      "metadata": {
+        "description": "Hypothetical question, no concrete work",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "remember-preference",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Remember that I prefer using TypeScript over JavaScript, and I like functional programming style."
+        }
+      ],
+      "metadata": {
+        "description": "Save user preferences",
+        "category": "explicit-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "check-specific-file",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Show me what's in the project requirements file."
+        }
+      ],
+      "metadata": {
+        "description": "View specific memory file",
+        "category": "view-memory",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "complex-save",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I just finished implementing the user authentication module. It uses bcrypt for password hashing, JWT tokens with 7-day expiry, refresh token rotation, and rate limiting (5 failed attempts = 15 min lockout). Save this implementation summary."
+        }
+      ],
+      "metadata": {
+        "description": "Complex technical details to save",
+        "category": "explicit-save",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "implicit-continuation",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Let's continue building the authentication system we started."
+        }
+      ],
+      "metadata": {
+        "description": "Implicit reference to previous work",
+        "category": "view-memory",
+        "difficulty": "medium"
+      }
+    },
+    {
+      "id": "add-to-existing",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Add 'Redis caching layer' to the project requirements list."
+        }
+      ],
+      "metadata": {
+        "description": "Append to existing memory",
+        "category": "update-memory",
+        "difficulty": "medium"
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "metadata": {
+    "name": "haiku-generated-memory-tool-dataset",
+    "created_at": "2025-10-31T05:47:44.843Z",
+    "source_model": "claude-haiku-4-5",
+    "total_items": 3
+  },
+  "items": [
+    {
+      "id": "save-code-explicit",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm working on a Python web scraper that keeps crashing with a timeout error. Here's the problematic function:\n\n```python\ndef fetch_page(url, retries=3):\n    for i in range(retries):\n        try:\n            response = requests.get(url, timeout=5)\n            return response.text\n        except requests.exceptions.Timeout:\n            if i == retries - 1:\n                raise\n            time.sleep(1)\n```\n\nPlease help me debug this and remember the solution for later."
+        }
+      ],
+      "expected_output": {
+        "type": "tool_calls",
+        "tool_calls": [
+          {
+            "type": "tool-call",
+            "toolCallId": "toolu_01FGngFCdzJnC4cgkXW8vJqM",
+            "toolName": "memory",
+            "input": "{\"command\":\"view\",\"path\":\"/memories\"}"
+          },
+          {
+            "type": "tool-call",
+            "toolCallId": "toolu_01LdQTH2Q7HB5HcidjKnE6T9",
+            "toolName": "memory",
+            "input": "{\"command\":\"create\",\"path\":\"/memories/web_scraper_debug.md\",\"file_text\":\"# Web Scraper Debugging - Timeout Issues\\n\\n## Problem Identified\\nThe original `fetch_page()` function had several issues causing crashes:\\n\\n### Issues Found:\\n1. **Only catches Timeout errors** - Missing other connection exceptions (ConnectionError, HTTPError, etc.)\\n2. **No exponential backoff** - Fixed 1-second delay doesn't scale with retries\\n3. **No error logging** - Can't diagnose why failures occur\\n4. **Aggressive timeout** - 5 seconds is very short for many websites\\n5. **No headers** - Servers may block requests without User-Agent\\n6. **Missing status code validation** - HTTP errors aren't caught\\n\\n## Solution Implemented\\nImproved function with better error handling, logging, and backoff strategy:\\n\\n```python\\nimport requests\\nimport time\\nimport logging\\n\\nlogging.basicConfig(level=logging.WARNING)\\nlogger = logging.getLogger(__name__)\\n\\ndef fetch_page(url, retries=3, timeout=10, backoff_factor=1.5):\\n    \\\"\\\"\\\"\\n    Fetch a webpage with robust retry logic and error handling.\\n    \\n    Args:\\n        url: URL to fetch\\n        retries: Number of retry attempts\\n        timeout: Request timeout in seconds\\n        backoff_factor: Exponential backoff multiplier\\n    \\\"\\\"\\\"\\n    headers = {\\n        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'\\n    }\\n    \\n    for attempt in range(retries):\\n        try:\\n            response = requests.get(\\n                url, \\n                timeout=timeout,\\n                headers=headers,\\n                allow_redirects=True\\n            )\\n            response.raise_for_status()  # Raise for 4xx/5xx status codes\\n            logger.info(f\\\"Successfully fetched {url}\\\")\\n            return response.text\\n            \\n        except requests.exceptions.Timeout:\\n            logger.warning(f\\\"Timeout on attempt {attempt + 1}/{retries}\\\")\\n            if attempt == retries - 1:\\n                logger.error(f\\\"Failed to fetch {url} after {retries} attempts\\\")\\n                raise\\n                \\n        except requests.exceptions.ConnectionError as e:\\n            logger.warning(f\\\"Connection error on attempt {attempt + 1}/{retries}: {e}\\\")\\n            if attempt == retries - 1:\\n                raise\\n                \\n        except requests.exceptions.HTTPError as e:\\n            logger.error(f\\\"HTTP error: {e.response.status_code}\\\")\\n            raise  # Don't retry on HTTP errors (unless 429, 503, 504)\\n            \\n        except requests.exceptions.RequestException as e:\\n            logger.error(f\\\"Request failed: {e}\\\")\\n            raise\\n        \\n        # Exponential backoff before next retry\\n        if attempt < retries - 1:\\n            wait_time = backoff_factor ** attempt\\n            logger.debug(f\\\"Waiting {wait_time}s before retry...\\\")\\n            time.sleep(wait_time)\\n```\\n\\n## Key Improvements:\\n- ✅ Catches multiple exception types\\n- ✅ Exponential backoff (1s, 1.5s, 2.25s...)\\n- ✅ Proper HTTP status validation\\n- ✅ Logging for diagnostics\\n- ✅ User-Agent header (prevents many blocks)\\n- ✅ Configurable timeout (10s default instead of 5s)\\n- ✅ Clear attempt tracking\\n\\n## Usage:\\n```python\\ntry:\\n    html = fetch_page('https://example.com')\\nexcept requests.exceptions.RequestException as e:\\n    print(f\\\"Failed to fetch page: {e}\\\")\\n```\\n\\n## Testing Tips:\\n- Test with `requests.get(..., timeout=0.001)` to simulate timeout\\n- Use `httpbin.org/delay/10` to test long responses\\n- Monitor logs to identify pattern of failures\\n\"}"
+          }
+        ]
+      },
+      "metadata": {
+        "description": "User explicitly asks to remember debugging solution",
+        "category": "explicit-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "casual-debug",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Why is my Python script throwing a NameError? I have `print(x)` but x is not defined."
+        }
+      ],
+      "expected_output": {
+        "type": "tool_calls",
+        "tool_calls": [
+          {
+            "type": "tool-call",
+            "toolCallId": "toolu_01MYyt47L1YNCeGdpADQ14p2",
+            "toolName": "memory",
+            "input": "{\"command\":\"view\",\"path\":\"/memories\"}"
+          }
+        ]
+      },
+      "metadata": {
+        "description": "Simple one-off question, no persistence needed",
+        "category": "no-save",
+        "difficulty": "easy"
+      }
+    },
+    {
+      "id": "continue-previous-work",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Can you help me continue working on the API integration project I was doing yesterday?"
+        }
+      ],
+      "expected_output": {
+        "type": "tool_calls",
+        "tool_calls": [
+          {
+            "type": "tool-call",
+            "toolCallId": "toolu_01BYszTUsGssvqNFZ3vwNL6t",
+            "toolName": "memory",
+            "input": "{\"command\":\"view\",\"path\":\"/memories\"}"
+          }
+        ]
+      },
+      "metadata": {
+        "description": "User references previous work, should check memory first",
+        "category": "view-memory",
+        "difficulty": "easy"
+      }
+    }
+  ]
+}

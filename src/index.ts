@@ -9,6 +9,8 @@ import { createToolJsonSchema } from "./schema/tool-json-schema.js";
 import { createMemoryExecutor } from "./runtime/memory-executor.js";
 import type { Storage } from "./runtime/storage.js";
 
+export { MEMORY_COMMANDS } from "./types/commands.js";
+
 export interface CreateMemoryToolOptions {
   readonly toolName?: MemoryToolName;
   readonly storage: Storage;
