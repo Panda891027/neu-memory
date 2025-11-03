@@ -1,6 +1,10 @@
 # neu-memory
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Panda891027/neu-memory?quickstart=1)
+
 Lightweight, model-agnostic memory toolkit inspired by Claude's built-in memory tool. Bring long-term memory to any LLM agent with a tiny TypeScript package.
+
+> 🐍 **NEW**: [Python version available!](python-version/) | 🚀 [Try it online in Codespaces](CODESPACES.md)
 
 ## Why neu-memory?
 
@@ -9,7 +13,23 @@ Lightweight, model-agnostic memory toolkit inspired by Claude's built-in memory 
 - Storage agnostic: use the same interface across local filesystems, database, or cloud object stores.
 - 100% open source.
 
-## Quickstart
+## Language Support
+
+### TypeScript/JavaScript (Original)
+Production-ready monorepo with multiple storage backends and examples.
+
+### Python
+Complete Python port with async/await support. See [python-version/](python-version/).
+
+```bash
+pip install neu-memory neu-memory-storage-in-memory
+```
+
+[📖 Python Documentation](python-version/README.md) | [🐍 Python Examples](python-version/examples/)
+
+---
+
+## Quickstart (TypeScript)
 
 Install the core package and a storage backend:
 
